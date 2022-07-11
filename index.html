@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tropic OS - Home</title>
+<script>
+let chartRendered = false;
+
+
+
+function learnMoreScroll() {
+    document.getElementById("about1").scrollIntoView({behavior: 'smooth', block: 'start'});
+}
+
+function standardDownload() {
+    document.getElementById("standardDownload").click();
+}
+
+function proDownload() {
+    document.getElementById("proDownload").click();
+}
+
+function corporationDownload() {
+    document.getElementById("corporationDownload").click();
+}
+
+const chartSettings = {
+    type: 'bar',
+    data: {
+        labels: ['Windows 10', 'Windows 7', 'MacOS','Ubuntu', 'Chrome OS', 'Toast OS'],
+        datasets: [
+            {
+                data: [15.64 * 1024, 10.50 * 1024, 12.23 * 1024, 4.5 * 1024, 4 * 1024, 16/1024],
+                //backgroundColor: ['rgb(255, 89, 139)', 'rgb(105, 197, 255)', 'rgb(175, 255, 105)', 'rgb(250, 126, 77)', 'rgb(142, 107, 255)'],
+                backgroundColor: ["#db6eac", "#d160a8", "#d160c6", "#bc60d1", "#a868d4"],
+                borderColor: ['#36447d'],
+                borderWidth: 0,
+                borderRadius: 6
+            }
+        ]
+    },
+    options: {
+        plugins:{
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            y: {
+                title: {
+                    display: true,
+                    text: 'Size On Disk (MB)',
+                    color: 'rgb(0,0,0)',
+                    font: {
+                        size: 18,
+                        family: 'Poppins',
+                        style: 'sans-seriff',
+                        weight: 600
+                    }
+                },
+                ticks: {
+                    color: 'rgb(0,0,0)',
+                    font: {
+                        size: 14,
+                        family: 'Poppins',
+                        weight: 600
+                    }
+                },
+                grid: {
+                    color: 'rgba(0, 0, 0, 0.1)',
+                    borderColor: 'rgba(0, 0, 0, 1)',
+                    borderWidth: 3,
+                    drawTicks: false,
+                    lineWidth: 3
+                }
+            },
+            x: {
+                ticks: {
+                    color: 'rgb(0,0,0)',
+                    font: {
+                        size: 16,
+                        family: 'Poppins',
+                        weight: 600
+                    }
+                },
+                grid: {
+                    color: 'rgba(0, 0, 0, 0.1)',
+                    borderColor: 'rgba(0, 0, 0, 1)',
+                    borderWidth: 3,
+                    drawTicks: false,
+                    display: false
+                }
+            }
+        },
+        onAnimationComplete: function(){
+            this.showTooltip(this.datasets[0].bars, true);
+        },
+        animation: {
+            duration: 1000,
+            easing: "easeOutQuart"
+        },
+        responsive: false,
+        maintainAspectRatio: false,
+    }
+}
+
+window.onload=function(){
+    var canvas = document.getElementById("myChart");
+    var parent = document.getElementById("parent");
+    canvas.width = parent.offsetWidth - 2*80;
+    console.log(Chart.defaults);
+    if (isScrolledIntoView(document.getElementById("myChart"))) {
+        var ctx = document.getElementById("myChart").getContext("2d");
+        var myChart = new Chart(ctx, chartSettings);
+        chartRendered = true;
+    }
+}
+
+document.addEventListener('scroll', function(e) {
+    if (chartRendered) return;
+
+    if (isScrolledIntoView(document.getElementById("myChart"))) {
+        var ctx = document.getElementById("myChart").getContext("2d");
+        var myChart = new Chart(ctx, chartSettings);
+        chartRendered = true;
+    }
+});
+
+function isScrolledIntoView(el) {
+    var rect = el.getBoundingClientRect();
+    var elemTop = rect.top;
+    var elemBottom = rect.bottom;
+
+    // Only completely visible elements return true:
+    // var isVisible = (elemTop >= 0) && (elemBottom <= window.innerHeight);
+    // Partially visible elements return true:
+    var isVisible = elemTop < window.innerHeight / 2;
+    return isVisible;
+}
+</script>
+
+<style>
+.parallaxTop {
+    min-height: 500px;
+    background-color: black;
+    background-attachment: fixed;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.parallaxCenter {
+    min-height: 500px;
+ background-color: blue;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.parallaxBottom {
+    min-height: 500px;
+ background-color: red;
+    background-attachment: fixed;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.button {
+    width: 200px;
+    height: 70px;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.2s;
+    cursor: pointer;
+    border-radius: 0px;
+}
+
+.learnMore {
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    border: 4px solid #ffffff;
+    align-self: center;
+    font-family:'Poppins', sans-serif;
+    font-size:20px;
+    font-weight: 600;
+}
+
+.learnMore:hover {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+}
+
+.title {
+    margin-top: 80px;
+    margin-bottom: 50px;
+    color:white;
+    font-size:150px;
+    font-family:'Poppins', sans-serif;
+    text-align:center;
+    font-weight: 900;
+}
+
+.arrowDown {
+    width:40px;
+    height:30px;
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+    position:relative;
+    top:20px
+}
+
+.subtitle {
+    color:white;
+    margin-bottom: 150px;
+    font-family:'Poppins', sans-serif;
+    font-size:30px;
+    text-align:center;
+    font-weight: 600;
+}
+
+.aboutSubtitle {
+    color:#000000;
+    font-size: 50px;
+    margin-bottom: 40px;
+    font-weight: 600;
+}
+
+.about1 {
+    background-color:rgb(255, 255, 255);
+    font-size:22px;
+    font-family:'Poppins', sans-serif;
+    margin-top:70px;
+    padding: 80px;
+}
+
+.about2 {
+    background-color:rgb(255, 255, 255);
+    font-size:22px;
+    font-family:'Poppins', sans-serif;
+    padding: 80px;
+}
+
+.aboutBlack {
+    background-color: rgb(30, 30, 30);
+    font-size:22px;
+    font-family:'Poppins', sans-serif;
+    padding: 80px;
+    color: white;
+}
+
+.downloadDIV {
+    background-color:rgb(255, 255, 255);
+    font-size:22px;
+    font-family:'Poppins', sans-serif;
+    padding: 80px;
+    padding-top: 20px;
+}
+
+.downloadNow {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color:rgb(0, 0, 0);
+    font-size:100px;
+    font-family:'Poppins', sans-serif;
+    text-align:center;
+    font-weight: 600;
+}
+
+.row {
+    display: flex;
+}
+
+.column {
+    flex: 33.333%;
+    text-align: center;
+}
+
+.planTitle {
+    margin-top: 20px;
+    margin-bottom: 0px;
+    color:rgb(0, 0, 0);
+    font-size:50px;
+    font-family:'Poppins', sans-serif;
+    text-align:center;
+    font-weight: 600;
+}
+
+.oldPlanPrice {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color:rgb(0, 0, 0);
+    font-size:20px;
+    font-family:'Poppins', sans-serif;
+    text-align:center;
+    font-weight: 400;
+}
+
+.newPlanPrice {
+    margin-top: 10px;
+    margin-bottom: 40px;
+    color:rgb(0, 0, 0);
+    font-size:40px;
+    font-family:'Poppins', sans-serif;
+    text-align:center;
+    font-weight: 600;
+}
+
+.downloadButton {
+    width: 250px;
+    height: 70px;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    border: 5px solid #000000;
+    align-self: center;
+    font-family:'Poppins', sans-serif;
+    font-size:20px;
+    font-weight: 600;
+}
+
+.downloadButton:hover {
+    background-color: #000000;
+    color: rgb(255, 255, 255);
+}
+
+.callout {
+  position: fixed;
+  bottom: 35px;
+  right: 20px;
+  margin-left: 20px;
+  max-width: 300px;
+}
+
+.callout-header {
+  padding: 25px 15px;
+  background: #555;
+  font-size: 30px;
+  color: white;
+}
+
+.callout-container {
+  padding: 15px;
+  background-color: #ccc;
+  color: black
+}
+
+.closebtn {
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.closebtn:hover {
+  color: lightgrey;
+}
+</style>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;400;700;900&display=swap" rel="stylesheet">
+
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<head>
+
+<body>
+
+<div class="downloadDIV" style="padding-bottom:20px; padding-top:auto">
+<!--<p class="downloadNow">Tropic OS</p>
+<p>Tropic stands for: Tropic is an Real Os made in Python. Its Cool.<br>Its made in Python. Do you want to join? <a href="$=3232">Click here..</a></p>-->
+    <p class="downloadNow">Get Tropic OS Today.</p>
+    <div class="row">
+        <div class="column">
+            <p class="planTitle"><u style="text-decoration-thickness: 5px;">Beta</u></p>
+            <p class="oldPlanPrice"><s style="text-decoration-thickness: 7%;">US$50.00</s></p>
+            <p class="newPlanPrice">US$0.00</p>
+            <button class="button downloadButton" onclick="location.href='downloads/beta.zip'">.py file</button>
+            <button class="button downloadButton" onclick="location.href='downloads/betaplusstartguide.zip'">.py + Start guide</button>
+        </div>
+        <div class="column">
+            <p class="planTitle"><u style="text-decoration-thickness: 5px;">Standard</u></p>
+            <p class="oldPlanPrice"><s style="text-decoration-thickness: 7%;">US$100.00</s></p>
+            <p class="newPlanPrice">US$0.00</p>
+            <button class="button downloadButton" onclick="location.href='downloads/standard.zip'">.py file</button>
+            <button class="button downloadButton" onclick="location.href='downloads/standardplusstartguide.zip'">.py + Start guide</button>
+        </div>
+        <div class="column">
+            <p class="planTitle"><u style="text-decoration-thickness: 5px;">Professionals</u></p>
+            <p class="oldPlanPrice"><s style="text-decoration-thickness: 7%;">US$1,000.00</s></p>
+            <p class="newPlanPrice">US$0.00</p>
+            <button class="button downloadButton" onclick="location.href='downloads/pro.zip'">.py file</button>
+            <button class="button downloadButton" onclick="location.href='downloads/proplusstartguide.zip'">.py + Start guide</button>
+        </div>
+
+
+    </div>
+
+    <div class="row">
+        <div class="column">
+            <p class="planTitle"><u style="text-decoration-thickness: 5px;">Gaming</u></p>
+            <p class="oldPlanPrice"><s style="text-decoration-thickness: 7%;">US$2000.00</s></p>
+            <p class="newPlanPrice">US$0.00</p>
+            <button class="button downloadButton" onclick="location.href='downloads/gaming.zip'">.py file</button>
+            <button class="button downloadButton" onclick="location.href='downloads/gamingplusstartguide.zip'">.py + Start guide</button>
+        </div>
+        <div class="column">
+            <p class="planTitle"><u style="text-decoration-thickness: 5px;">Business</u></p>
+            <p class="oldPlanPrice"><s style="text-decoration-thickness: 7%;">US$2500.00</s></p>
+            <p class="newPlanPrice">US$0.00</p>
+            <button class="button downloadButton" onclick="location.href='downloads/corporations.zip'">.py file</button>
+            <button class="button downloadButton" onclick="location.href='downloads/corporationsplusstartguide.zip'">.py + Start guide</button>
+        </div>
+        <div class="column">
+            <p class="planTitle"><u style="text-decoration-thickness: 5px;">Enterprise</u></p>
+            <p class="oldPlanPrice"><s style="text-decoration-thickness: 7%;">US$3000.00</s></p>
+            <p class="newPlanPrice">US$0.00</p>
+            <button class="button downloadButton" onclick="location.href='downloads/enterprise.zip'">.py file</button>
+            <button class="button downloadButton" onclick="location.href='downloads/enterpriseplusstartguide.zip'">.py + Start guide</button>
+        </div>
+
+
+    </div>
+</div>
+<div class="callout">
+  <div class="callout-header">From EU or US?</div>
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">x</span>
+  <div class="callout-container">
+    <h3>Are you from the <a href="eu/">EU</a> or <a href="#">US</a>? By default we set it to US.</h3p>
+  </div>
+</div>
+
+</body>
+
+
+
+</html>
